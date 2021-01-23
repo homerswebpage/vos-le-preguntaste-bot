@@ -1,0 +1,22 @@
+{
+  "name": "vos-le-preguntaste-bot",
+  "version": "1.0.0",
+  "description": "Twitter bot",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/homerswebpage/vos-le-preguntaste-bot.git"
+  },
+  "author": "Daniel Marconi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/homerswebpage/vos-le-preguntaste-bot/issues"
+  },
+  "homepage": "https://github.com/homerswebpage/vos-le-preguntaste-bot#readme",
+  "dependencies": {
+    "twitter": "^1.7.1"
+  }
+}
