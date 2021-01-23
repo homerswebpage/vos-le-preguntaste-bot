@@ -1,6 +1,5 @@
-const Bot = require('./bot.js');
-const botScreenName = process.env.BOT_SCREEN_NAME;
+import { botScreenName, replyMentions } from './bot.js';
 
 console.log(`${botScreenName} is running`);
 
-Bot.replyMentions();
+replyMentions();

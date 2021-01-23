@@ -1,4 +1,4 @@
-const Twitter = require('twitter');
+import Twitter from 'twitter';
 
 const client = new Twitter({
     consumer_key: process.env.CONSUMER_KEY,
@@ -7,9 +7,9 @@ const client = new Twitter({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-const botScreenName = process.env.BOT_SCREEN_NAME;
+export const botScreenName = process.env.BOT_SCREEN_NAME;
 
-const tweetIt = (tweetText) => {
+export const tweetIt = (tweetText) => {
     console.log(`${botScreenName} will tweet "${tweetText}"`);
     client.post('statuses/update', {
         status: tweetText
@@ -18,18 +18,18 @@ const tweetIt = (tweetText) => {
     .catch((err) => console.log('Error', err));
 };
 
-const replyTweet = (replyText, from, tweetId) => {
-    console.log(`${botScreenName} will reply the tweet ${tweetId} from ${from}`);
+export const replyTweet = (replyText, from, tweetId) => {
+    console.log(`${botScreenName} will reply the tweet ${tweetId} from @${from}`);
 
     client.post('statuses/update', {
         status: `@${from} ${replyText}`,
         in_reply_to_status_id: tweetId
     })
-    .then((tweet) => console.log('Success!'))
-    .catch((err) => console.log('Error', err));
+    .then((tweet) => console.log(`Reply to ${tweetId} from @${from} was successful`))
+    .catch((err) => console.log(`Error trying to reply ${tweetId} from @${from}`, err));
 };
 
-const replyMentions = () => {
+export const replyMentions = () => {
     const botScreenName = process.env.BOT_SCREEN_NAME;
     console.log(`${botScreenName} is waiting for mentions...`);
 
@@ -55,9 +55,3 @@ const replyMentions = () => {
         });
     });
 };
-
-module.exports = {
-    tweetIt,
-    replyTweet,
-    replyMentions
-}
