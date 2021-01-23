@@ -1,5 +1,6 @@
-console.log('eumessibot is running');
-
 const Bot = require('./bot.js');
+const botScreenName = process.env.BOT_SCREEN_NAME;
 
-Bot.tweetIt('no');
+console.log(`${botScreenName} is running`);
+
+Bot.replyMentions();

@@ -7,8 +7,10 @@ const client = new Twitter({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
+const botScreenName = process.env.BOT_SCREEN_NAME;
+
 const tweetIt = (tweetText) => {
-    console.log(`eumessibot will tweet "${tweetText}"`);
+    console.log(`${botScreenName} will tweet "${tweetText}"`);
     client.post('statuses/update', {
         status: tweetText
     })
@@ -16,34 +18,46 @@ const tweetIt = (tweetText) => {
     .catch((err) => console.log('Error', err));
 };
 
-// const listen = () => {
-//     client.stream('statuses/filter', { track: '@eumessibot' }, function (stream) {
-//         stream.on('data', function (tweet) {
-//             // console.log(tweet);
+const replyTweet = (replyText, from, tweetId) => {
+    console.log(`${botScreenName} will reply the tweet ${tweetId} from ${from}`);
+
+    client.post('statuses/update', {
+        status: `@${from} ${replyText}`,
+        in_reply_to_status_id: tweetId
+    })
+    .then((tweet) => console.log('Success!'))
+    .catch((err) => console.log('Error', err));
+};
+
+const replyMentions = () => {
+    const botScreenName = process.env.BOT_SCREEN_NAME;
+    console.log(`${botScreenName} is waiting for mentions...`);
+
+    client.stream('statuses/filter', { track: `@${botScreenName}` }, function (stream) {
+
+        stream.on('data', function (tweet) {
+
+            const tweetId = tweet.id_str;
+            const from = tweet.user.screen_name;
+            const text = tweet.text;
+            const replyTo = tweet.in_reply_to_screen_name; // persona arrobada en el tweet inicial, en este caso el @ del bot
+            
+            console.log(`[ID: ${tweetId}] ${from} (replying to ${replyTo}) twitted: ${text}`);
+
+            if (replyTo === botScreenName) {
+                replyTweet('mmm no, la verdad que no maquina', from, tweetId);
+            }    
     
-//             const replyTo = tweet.in_reply_to_screen_name;
-//             const replyToID = tweet.id;
-//             const from = tweet.user.screen_name;
+        });
     
-//             if (replyTo === 'eumessibot') {
-//                 const newTweet = `@${from} no0000asdas00asd0`;
-//                 client.post('statuses/update', {
-//                     status: newTweet,
-//                     in_reply_to_status_id: replyToID
-//                 })
-//                     .then((tweet) => console.log('success', tweet.text))
-//                     .catch((err) => console.log('error', err));
-//             }
-    
-    
-//         });
-    
-//         stream.on('error', function (error) {
-//             console.log(error);
-//         });
-//     });
-// };
+        stream.on('error', function (error) {
+            console.log('Stream error', error);
+        });
+    });
+};
 
 module.exports = {
-    tweetIt
+    tweetIt,
+    replyTweet,
+    replyMentions
 }
