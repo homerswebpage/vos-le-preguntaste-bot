@@ -2,9 +2,11 @@
   "name": "vos-le-preguntaste-bot",
   "version": "1.0.0",
   "description": "Twitter bot",
-  "main": "bot.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "env $(cat .env | grep -v \"#\" | xargs) npm start"
   },
   "repository": {
     "type": "git",
