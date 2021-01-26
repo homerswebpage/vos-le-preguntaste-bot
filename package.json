@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/homerswebpage/vos-le-preguntaste-bot#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "twitter": "^1.7.1"
   }
 }

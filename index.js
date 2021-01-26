@@ -1,8 +1,17 @@
 import { botScreenName, replyMentions, searchTweets, tweetIt, uploadMedia } from './bot.js';
+import express from 'express';
 
-console.log(`${botScreenName} is running`);
+const app = express();
 
-replyMentions();
+const port = process.env.PORT | 3000;
+
+app.listen(port, () => {
+    console.log(`${botScreenName} is running in port ${port}`);
+
+    replyMentions();
+});
+
+
 
 //getTweet('1344070510276206594');
 
